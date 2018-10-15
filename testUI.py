@@ -19,10 +19,23 @@ def login(button):
 
     imap = imaplib.IMAP4_SSL("imap.gmail.com", 993)
     try:
+        username = entry_email.get_text()
+        password = entry_pass.get_text()
+
+
         imap.login(entry_email.get_text(), entry_pass.get_text())
         # TODO: login dialog
+        window.destroy()
+        builder2 = Gtk.Builder()
+        builder2.add_from_file("success.glade")
+        window2 = builder2.get_object("Success")
+        window2.connect("delete-event", Gtk.main_quit)
+        #btn_ok = builder2.get_object("OK")
+        #btn_ok.connect("clicked", Gtk.main_quit)
+        window2.show_all()
+
         # TODO: destroy all windows
-        main(entry_email.get_text(), entry_pass.get_text())
+        main(username, password)
     except Exception as e:
         #Todo: login unsuccessful dialog
         pass
